@@ -79,8 +79,45 @@ func main() {
 		}
 	}
 
-	fmt.Println(guardTotalSleep)
-	fmt.Println(guardIndividualMinuteCount)
+	guardStr := ""
+	totalSleepTime := 0
+	for k, v := range guardTotalSleep {
+		if v > totalSleepTime {
+			totalSleepTime = v
+			guardStr = k
+		}
+	}
+	fmt.Println("Guard who sleeps the most:")
+	fmt.Println(guardStr)
+
+	minute := 0
+	minCount := 0
+	for k, v := range guardIndividualMinuteCount[guardStr] {
+		if v > minCount {
+			minCount = v
+			minute = k
+		}
+	}
+	fmt.Println("guard's most slept minute")
+	fmt.Println(minute)
+
+	// guard with most slept minutes
+	highestCountMinute := 0
+	highestMinute := 0
+	guardWithHighestMinuteCount := ""
+	for guardStr, v := range guardIndividualMinuteCount {
+		for minute, count := range v {
+			if count > highestCountMinute {
+				highestCountMinute = count
+				highestMinute = minute
+				guardWithHighestMinuteCount = guardStr
+			}
+		}
+	}
+	fmt.Println("the guard with the most frequent minute of sleep is")
+	fmt.Println(guardWithHighestMinuteCount)
+	fmt.Println(highestCountMinute)
+	fmt.Println("minute with highest frequency", highestMinute)
 
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
