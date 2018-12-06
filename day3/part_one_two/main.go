@@ -30,7 +30,7 @@ func overlappingArea(rect1 Rect, rect2 Rect) bool {
 		rect1.h, rect2.h = rect2.h, rect1.h
 	}
 
-	if rect1.x+rect1.w > rect2.x && rect1.y+rect1.h > rect2.y {
+	if rect1.x+rect1.w >= rect2.x || rect1.y+rect1.h >= rect2.y {
 		return true
 	}
 	return false
@@ -97,15 +97,17 @@ func main() {
 		}
 	}
 
+	otherCount := 0
 	// for every claim just check on the other to see if overlap
 	// my overlap fxn is off; the result is too low
-	// for i, claim := range claims {
-	// 	for j := i + 1; j < len(claims); j++ {
-	// 		if overlappingArea(claim, claims[j]) {
-	// 			overlapCount++
-	// 		}
-	// 	}
-	// }
+	for i, claim := range claims {
+		for j := i + 1; j < len(claims); j++ {
+			if overlappingArea(claim, claims[j]) {
+				otherCount++
+			}
+		}
+	}
+	fmt.Println(otherCount)
 
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
