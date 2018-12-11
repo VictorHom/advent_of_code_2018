@@ -51,20 +51,12 @@ func findMetaDataIndexSum(headNode node, metaDataIndexSum *int) int {
 		*metaDataIndexSum = *metaDataIndexSum + sum
 		return sum
 	}
-	outOfRangeIndex := false
+
 	for i := 0; i < len(metaDataEntries); i++ {
 		index := metaDataEntries[i]
-		if index > len(*children) {
-			outOfRangeIndex = true
+		if index > len(*children) == false {
+			findMetaDataIndexSum((*children)[index-1], metaDataIndexSum)
 		}
-	}
-	if outOfRangeIndex {
-		return 0
-	}
-	// findMetaDataIndexSum
-	for i := 0; i < len(metaDataEntries); i++ {
-		index := metaDataEntries[i]
-		return findMetaDataIndexSum((*children)[index], metaDataIndexSum)
 	}
 
 	return *metaDataIndexSum
